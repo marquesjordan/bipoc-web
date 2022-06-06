@@ -1,15 +1,15 @@
 import { useContext } from 'react';
-import { AuthContext } from '../context/authContext';
+import { Context as AuthContext } from '../context/authContext';
 import Messages from '../components/Messages';
 
 function HomePage() {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   return (
     <>
       <h1>HOME PAGE</h1>
-      {user ? (
+      {false ? (
         <>
-          <h2>{user.email} is logged in.</h2>
+          <h2>{'user.email'} is logged in.</h2>
         </>
       ) : (
         <>

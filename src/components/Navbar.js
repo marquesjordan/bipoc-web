@@ -3,11 +3,18 @@ import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AuthContext } from '../context/authContext';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import { Context as AuthContext } from '../context/authContext';
+import { styled } from '@mui/material/styles';
+
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  alignItems: 'center',
+  justifyContent: 'space-between',
+}));
 
 function Navbar() {
   let navigate = useNavigate();
-  const { user, logout } = useContext(AuthContext);
+  const { state, logout } = useContext(AuthContext);
 
   const onLogout = () => {
     logout();
@@ -17,7 +24,7 @@ function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: '#5B6BBF' }}>
-        <Toolbar>
+        <StyledToolbar>
           <IconButton
             size="large"
             edge="start"
@@ -26,13 +33,20 @@ function Navbar() {
             sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h5" component="div">
+          {/* <Typography variant="h5" component="div">
             <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
               BIPOC
             </Link>
-          </Typography>
+          </Typography> */}
+          {/* <IconButton
+            size="large"
+            aria-label="display more actions"
+            edge="end"
+            color="inherit">
+            <MoreIcon />
+          </IconButton> */}
           <Box alignItems="right" sx={{ flexGrow: 1, textAlign: 'right' }}>
-            {user ? (
+            {state.token ? (
               <Button
                 style={{
                   textDecoration: 'none',
@@ -61,7 +75,7 @@ function Navbar() {
               </>
             )}
           </Box>
-        </Toolbar>
+        </StyledToolbar>
       </AppBar>
     </Box>
   );

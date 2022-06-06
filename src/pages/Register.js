@@ -1,22 +1,22 @@
 import React, { useContext, useState } from 'react';
-import { AuthContext } from '../context/authContext';
+import { Context as AuthContext } from '../context/authContext';
 import { useForm } from '../hooks/form';
 import { useNavigate } from 'react-router-dom';
 
 import { TextField, Button, Container, Stack, Alert } from '@mui/material';
 
 function Register(props) {
-  const context = useContext(AuthContext);
+  const { state, registerUser } = useContext(AuthContext);
   let navigate = useNavigate();
   const [errors, setErrors] = useState([]);
 
   function registerUserCallback(values) {
     console.log('Callback hit ', values);
-    // registerUser();
+    registerUser(values);
   }
 
   const { onChange, onSubmit, values } = useForm(registerUserCallback, {
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -27,7 +27,7 @@ function Register(props) {
       <h3>Register</h3>
       <p>This is the register page, register below to create an account!</p>
       <Stack spacing={2} paddingBottom={2}>
-        <TextField label="Username" name="username" onChange={onChange} />
+        <TextField label="name" name="name" onChange={onChange} />
         <TextField label="Email" name="email" onChange={onChange} />
         <TextField
           label="Password"

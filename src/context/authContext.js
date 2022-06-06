@@ -1,65 +1,55 @@
-import React, { useReducer, createContext } from 'react';
-import jwtDecode from 'jwt-decode';
+import createDataContext from '../context/createDataContext';
+import api from '../api';
 
-const initialState = {
-  user: null,
-};
-
-if (localStorage.getItem('token')) {
-  const decodedToken = jwtDecode(localStorage.getItem('token'));
-
-  if (decodedToken.exp * 1000 < Date.now()) {
-    localStorage.removeItem('token');
-  } else {
-    initialState.user = decodedToken;
-  }
-}
-
-const AuthContext = createContext({
-  user: null,
-  login: (userData) => {},
-  logout: () => {},
-});
-
-function authReducer(state, action) {
+const authReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case 'LOGOUT':
-      return {
-        ...state,
-        user: null,
-      };
+    case 'add_error':
+      return { ...state, errorMessage: action.payload };
+    case 'auth':
+      return { ...state, errorMessage: '', token: action.payload };
     default:
       return state;
   }
-}
+};
 
-function AuthProvider(props) {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+const logout = (dispatch) => {
+  return async () => {
+    try {
+      console.log('Logout ');
 
-  const login = (userData) => {
-    localStorage.setItem('token', userData.token);
-    dispatch({
-      type: 'LOGIN',
-      payload: userData,
-    });
+      // await AsyncStorage.setItem('token', response.data.token);
+      dispatch({ type: 'auth', payload: null });
+    } catch (err) {
+      dispatch({ type: 'add_error', payload: 'Logout Error' });
+    }
   };
+};
 
-  function logout() {
-    localStorage.removeItem('token');
-    dispatch({ type: 'LOGOUT' });
-  }
+const registerUser = (dispatch) => {
+  return async ({ email, username, password, confirmPassword }) => {
+    try {
+      const response = await api.post('/api/register', {
+        email: email,
+        username: username,
+        password: password,
+        confirmPassword: confirmPassword,
+      });
 
-  return (
-    <AuthContext.Provider
-      value={{ user: state.user, login, logout }}
-      {...props}
-    />
-  );
-}
+      console.log('REPSONSE ', response);
 
-export { AuthContext, AuthProvider };
+      // await AsyncStorage.setItem('token', response.data.token);
+      dispatch({ type: 'auth', payload: response.data.token });
+    } catch (err) {
+      dispatch({ type: 'add_error', payload: 'Sign Up Error' });
+    }
+  };
+};
+
+export const { Provider, Context } = createDataContext(
+  authReducer,
+  {
+    registerUser,
+    logout,
+  },
+  { token: null, errorMessage: '' },
+);
