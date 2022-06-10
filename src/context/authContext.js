@@ -28,12 +28,15 @@ const logout = (dispatch) => {
 const registerUser = (dispatch) => {
   return async ({ email, username, password, confirmPassword }) => {
     try {
-      const response = await api.post('/api/register', {
-        email: email,
-        username: username,
-        password: password,
-        confirmPassword: confirmPassword,
-      });
+      const response = await api.post(
+        'https://vast-beach-48711.herokuapp.com/api/register',
+        {
+          email: email,
+          username: username,
+          password: password,
+          confirmPassword: confirmPassword,
+        },
+      );
 
       console.log('REPSONSE ', response);
 
