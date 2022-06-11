@@ -1,5 +1,6 @@
 import createDataContext from '../context/createDataContext';
 import api from '../api';
+import axios from 'axios';
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -28,7 +29,7 @@ const logout = (dispatch) => {
 const registerUser = (dispatch) => {
   return async ({ email, username, password, confirmPassword }) => {
     try {
-      const response = await api.post(
+      const response = await axios.post(
         'https://appapiproxy.herokuapp.com/https://bipoc-v3-api.herokuapp.com/api/register',
         {
           email: email,
