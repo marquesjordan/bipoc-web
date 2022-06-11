@@ -29,7 +29,7 @@ const registerUser = (dispatch) => {
   return async ({ email, username, password, confirmPassword }) => {
     try {
       const response = await api.post(
-        'https://bipoc-v3-api.herokuapp.com/api/register',
+        'https://appapiproxy.herokuapp.com/https://bipoc-v3-api.herokuapp.com/api/register',
         {
           email: email,
           username: username,
