@@ -1,6 +1,6 @@
 import createDataContext from '../context/createDataContext';
-import api from '../api';
 import axios from 'axios';
+import api from './../api';
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -29,15 +29,12 @@ const logout = (dispatch) => {
 const registerUser = (dispatch) => {
   return async ({ email, name, password, confirmPassword }) => {
     try {
-      const response = await axios.post(
-        'https://appapiproxy.herokuapp.com/https://vast-beach-48711.herokuapp.com/api/register',
-        {
-          email: email,
-          name: name,
-          password: password,
-          confirmPassword: confirmPassword,
-        },
-      );
+      const response = await api.post('/api/register', {
+        email: email,
+        name: name,
+        password: password,
+        confirmPassword: confirmPassword,
+      });
 
       // await AsyncStorage.setItem('token', response.data.token);
       dispatch({ type: 'auth', payload: response.data.token });
