@@ -30,7 +30,7 @@ const registerUser = (dispatch) => {
   return async ({ email, name, password, confirmPassword }) => {
     try {
       const response = await axios.post(
-        'https://vast-beach-48711.herokuapp.com/api/register',
+        'https://appapiproxy.herokuapp.com/https://vast-beach-48711.herokuapp.com/api/register',
         {
           email: email,
           name: name,
