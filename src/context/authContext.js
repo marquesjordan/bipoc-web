@@ -27,20 +27,20 @@ const logout = (dispatch) => {
 };
 
 const registerUser = (dispatch) => {
-  return async ({ email, username, password, confirmPassword }) => {
+  return async ({ email, name, password, confirmPassword }) => {
     try {
       const response = await axios.post(
-        'https://appapiproxy.herokuapp.com/https://bipoc-v3-api.herokuapp.com/api/register',
+        'https://appapiproxy.herokuapp.com/https://vast-beach-48711.herokuapp.com/api/register',
         {
           email: email,
-          username: username,
+          name: name,
           password: password,
           confirmPassword: confirmPassword,
         },
       );
 
       // await AsyncStorage.setItem('token', response.data.token);
-      // dispatch({ type: 'auth', payload: response.data.token });
+      dispatch({ type: 'auth', payload: response.data.token });
     } catch (err) {
       dispatch({ type: 'add_error', payload: 'Sign Up Error' });
     }
