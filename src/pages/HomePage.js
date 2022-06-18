@@ -1,9 +1,19 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Context as AuthContext } from '../context/authContext';
 import Messages from '../components/Messages';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
   // const { user } = useContext(AuthContext);
+  let navigate = useNavigate();
+  const { state } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!state.token) {
+      navigate('/login', { replace: true });
+    }
+  }, [state, navigate]);
+
   return (
     <>
       <h1>HOME PAGE</h1>

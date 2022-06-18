@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context as AuthContext } from '../context/authContext';
 import { useForm } from '../hooks/form';
 import { useNavigate } from 'react-router-dom';
@@ -6,9 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Stack, Alert } from '@mui/material';
 
 function Register(props) {
-  const { state, registerUser } = useContext(AuthContext);
   let navigate = useNavigate();
+  const { state, registerUser } = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    if (state.token) {
+      navigate('/', { replace: true });
+    }
+  }, [state, navigate]);
 
   function registerUserCallback(values) {
     registerUser(values);

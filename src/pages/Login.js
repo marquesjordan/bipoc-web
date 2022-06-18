@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context as AuthContext } from '../context/authContext';
 import { useForm } from '../hooks/form';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,12 @@ function Login(props) {
   let navigate = useNavigate();
   const { state, loginUser } = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    if (state.token) {
+      navigate('/', { replace: true });
+    }
+  }, [state, navigate]);
 
   function loginUserCallBack(values) {
     console.log('login Called');
