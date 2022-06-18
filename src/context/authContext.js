@@ -44,10 +44,31 @@ const registerUser = (dispatch) => {
   };
 };
 
+const loginUser = (dispatch) => {
+  return async ({ email, password }) => {
+    console.log('EMAIL ', email);
+    console.log('PASSWORD ', password);
+    try {
+      const response = await api.post('/api/login', {
+        email: email,
+        password: password,
+      });
+
+      console.log('RES ', response);
+      // await AsyncStorage.setItem('token', response.data.token);
+      dispatch({ type: 'auth', payload: response.data.token });
+    } catch (err) {
+      console.log('ERROR ', err);
+      dispatch({ type: 'add_error', payload: 'Sign In Error' });
+    }
+  };
+};
+
 export const { Provider, Context } = createDataContext(
   authReducer,
   {
     registerUser,
+    loginUser,
     logout,
   },
   { token: null, errorMessage: '' },

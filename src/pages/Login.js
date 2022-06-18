@@ -7,11 +7,12 @@ import { TextField, Button, Container, Stack, Alert } from '@mui/material';
 
 function Login(props) {
   let navigate = useNavigate();
-  const context = useContext(AuthContext);
+  const { state, loginUser } = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
 
-  function loginUserCallBack() {
-    // loginUser();
+  function loginUserCallBack(values) {
+    console.log('login Called');
+    loginUser(values);
   }
 
   const { onChange, onSubmit, values } = useForm(loginUserCallBack, {

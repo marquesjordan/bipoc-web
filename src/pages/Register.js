@@ -11,7 +11,6 @@ function Register(props) {
   const [errors, setErrors] = useState([]);
 
   function registerUserCallback(values) {
-    console.log('Callback hit ', values);
     registerUser(values);
   }
 
