@@ -5,7 +5,7 @@ const AuthContainer = ({ children, background }) => {
     <Container>
       <InnerContainer>
         <LeftContainer background={background} />
-        <RightContainer>{children}</RightContainer>
+        <RightContainer background={background}>{children}</RightContainer>
       </InnerContainer>
     </Container>
   );
@@ -30,10 +30,18 @@ const LeftContainer = styled.div`
   z-index: -5;
   background-image: ${({ background }) => `url("${background}")`};
   background-size: cover;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const RightContainer = styled.div`
   flex: 1;
   display: flex;
   padding: 10px;
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+    background-size: cover;
+  }
 `;
