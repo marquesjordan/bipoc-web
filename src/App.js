@@ -8,15 +8,25 @@ import { Provider as AuthProvider } from './context/authContext';
 
 function App() {
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       <AuthProvider>
         <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              height: '100%',
+            }}>
+            <Navbar />
+            <div style={{ height: '100%' }}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </Routes>
+            </div>
+          </div>
         </Router>
       </AuthProvider>
     </div>
