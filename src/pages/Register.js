@@ -3,6 +3,7 @@ import { Context as AuthContext } from '../context/authContext';
 import { useForm } from '../hooks/form';
 import { useNavigate } from 'react-router-dom';
 import AuthContainer from '../components/AuthContainer';
+import { useCookies } from 'react-cookie';
 
 import {
   TextField,
@@ -18,15 +19,20 @@ function Register(props) {
   let navigate = useNavigate();
   const { state, registerUser } = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
+  const [cookies, setCookie] = useCookies(['token']);
 
   useEffect(() => {
     if (state.token) {
       navigate('/', { replace: true });
     }
-  }, [state, navigate]);
+  }, []);
+
+  function navigateHome() {
+    navigate('/', { replace: true });
+  }
 
   function registerUserCallback(values) {
-    registerUser(values);
+    registerUser(values, navigateHome);
   }
 
   const { onChange, onSubmit, values } = useForm(registerUserCallback, {

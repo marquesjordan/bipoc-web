@@ -27,7 +27,6 @@ const InnerContainer = styled.div`
 const LeftContainer = styled.div`
   flex: 1;
   background: lightgrey;
-  z-index: -5;
   background-image: ${({ background }) => `url("${background}")`};
   background-size: cover;
   @media (max-width: 768px) {

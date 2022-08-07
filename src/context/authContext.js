@@ -1,11 +1,21 @@
 import createDataContext from '../context/createDataContext';
-import axios from 'axios';
 import api from './../api';
+import Cookies from 'universal-cookie';
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'add_error':
       return { ...state, errorMessage: action.payload };
+    case 'register':
+      const { user, profile, token } = action.payload;
+      console.log('REG ', action.payload);
+      return {
+        ...state,
+        errorMessage: '',
+        user: user._id,
+        profile: profile._id,
+        token: token,
+      };
     case 'auth':
       return { ...state, errorMessage: '', token: action.payload };
     default:
@@ -13,13 +23,30 @@ const authReducer = (state, action) => {
   }
 };
 
+const verify = (dispatch) => {
+  return async (token) => {
+    const response = await api.post('/api/verify', {
+      token,
+    });
+
+    console.log('CONTE ', response);
+    dispatch({ type: 'auth', payload: response.data });
+  };
+};
+
 const logout = (dispatch) => {
-  return async () => {
+  return async (callback) => {
     try {
       console.log('Logout ');
+      const cookies = new Cookies();
 
-      // await AsyncStorage.setItem('token', response.data.token);
+      cookies.remove('token');
+
       dispatch({ type: 'auth', payload: null });
+
+      if (callback) {
+        callback();
+      }
     } catch (err) {
       dispatch({ type: 'add_error', payload: 'Logout Error' });
     }
@@ -27,7 +54,8 @@ const logout = (dispatch) => {
 };
 
 const registerUser = (dispatch) => {
-  return async ({ email, name, password, confirmPassword }) => {
+  return async (data, callback) => {
+    const { email, name, password, confirmPassword } = data;
     try {
       const response = await api.post('/api/register', {
         email: email,
@@ -36,27 +64,40 @@ const registerUser = (dispatch) => {
         confirmPassword: confirmPassword,
       });
 
+      const cookies = new Cookies();
+
+      cookies.set('token', response.data.token);
+
       // await AsyncStorage.setItem('token', response.data.token);
-      dispatch({ type: 'auth', payload: response.data.token });
+      dispatch({ type: 'register', payload: response.data });
+
+      if (callback) {
+        callback();
+      }
     } catch (err) {
       dispatch({ type: 'add_error', payload: 'Sign Up Error' });
     }
   };
 };
 
-const loginUser = (dispatch) => {
-  return async ({ email, password }) => {
-    console.log('EMAIL ', email);
-    console.log('PASSWORD ', password);
+const loginUser = (dispatch, callback) => {
+  return async (data, callback) => {
+    const { email, password } = data;
     try {
       const response = await api.post('/api/login', {
         email: email,
         password: password,
       });
+      const cookies = new Cookies();
 
-      console.log('RES ', response);
+      cookies.set('token', response.data.token);
+
       // await AsyncStorage.setItem('token', response.data.token);
       dispatch({ type: 'auth', payload: response.data.token });
+
+      if (callback) {
+        callback();
+      }
     } catch (err) {
       console.log('ERROR ', err);
       dispatch({ type: 'add_error', payload: 'Sign In Error' });
@@ -70,6 +111,7 @@ export const { Provider, Context } = createDataContext(
     registerUser,
     loginUser,
     logout,
+    verify,
   },
   { token: null, errorMessage: '' },
 );

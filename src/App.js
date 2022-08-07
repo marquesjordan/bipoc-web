@@ -3,33 +3,32 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import CreatePostPage from './pages/CreatPostPage';
 import Navbar from './components/Navbar';
 import { Provider as AuthProvider } from './context/authContext';
+import { Provider as PostProvider } from './context/postContext';
+import { CookiesProvider } from 'react-cookie';
+import Box from '@mui/material/Box';
 
 function App() {
   return (
-    <div style={{ height: '100vh' }}>
-      <AuthProvider>
-        <Router>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'stretch',
-              height: '100%',
-            }}>
+    <AuthProvider>
+      <PostProvider>
+        <CookiesProvider>
+          <Router>
             <Navbar />
-            <div style={{ height: '100%' }}>
+            <Box component="main" sx={{ p: 3, mt: 5 }}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/new-post" element={<CreatePostPage />} />
               </Routes>
-            </div>
-          </div>
-        </Router>
-      </AuthProvider>
-    </div>
+            </Box>
+          </Router>
+        </CookiesProvider>
+      </PostProvider>
+    </AuthProvider>
   );
 }
 

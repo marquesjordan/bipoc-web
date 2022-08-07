@@ -1,32 +1,39 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Context as AuthContext } from '../context/authContext';
-import { useForm } from '../hooks/form';
-import { useNavigate } from 'react-router-dom';
-import AuthContainer from '../components/AuthContainer';
 import {
-  TextField,
+  Alert,
   Button,
   Container,
-  Stack,
-  Alert,
   Link,
+  Stack,
+  TextField,
 } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import AuthContainer from '../components/AuthContainer';
+import { Context as AuthContext } from '../context/authContext';
+import { useForm } from '../hooks/form';
+import { useCookies } from 'react-cookie';
 
 function Login(props) {
   let navigate = useNavigate();
-  const { state, loginUser } = useContext(AuthContext);
+  const { state, loginUser, verify } = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
+  const [cookies, setCookie] = useCookies(['token']);
 
   useEffect(() => {
-    if (state.token) {
+    if (!state.token && cookies.token) {
+      verify(cookies['token']);
+    } else if (state.token) {
       navigate('/', { replace: true });
     }
-  }, [state, navigate]);
+  }, [state.token]);
 
   function loginUserCallBack(values) {
-    console.log('login Called');
-    loginUser(values);
+    loginUser(values, navigateHome);
+  }
+
+  function navigateHome() {
+    navigate('/', { replace: true });
   }
 
   const { onChange, onSubmit, values } = useForm(loginUserCallBack, {
