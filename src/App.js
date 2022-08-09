@@ -1,4 +1,5 @@
 import './App.css';
+import { useEffect } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Register from './pages/Register';

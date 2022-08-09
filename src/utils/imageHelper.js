@@ -1,8 +1,9 @@
 import api from '../api';
+import keys from '../config/keys';
 
 const imageHelper = {
   fetchImage: async (key) => {
-    const response = await api.get(`http://localhost:5000/api/images/${key}`);
+    const response = await api.get(`${keys.HOST}/api/images/${key}`);
     console.log('Fetxgt ', response);
   },
 

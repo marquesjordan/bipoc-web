@@ -6,6 +6,9 @@ import styled from 'styled-components';
 import FloatAddButton from '../components/FloatAddButton';
 import { Container } from '@mui/material';
 import Card from '@mui/material/Card';
+import Messages from '../components/Messages';
+import { Box } from '@mui/system';
+import keys from '../config/keys';
 
 function HomePage() {
   let navigate = useNavigate();
@@ -23,11 +26,38 @@ function HomePage() {
         <Wrapper>
           <LeftContainer>
             <Card sx={{ marginY: 2, height: 200 }}>
-              <img
-                src="http://localhost:5000/api/images/ccdcc8151f3a85de86fc62009d787865"
-                alt="im"
-              />
+              <>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: 10,
+                    flexDirection: 'column',
+                    background:
+                      'linear-gradient(0deg, rgba(240,229,255,1) 8%, rgba(91,107,176,1) 92%)',
+                  }}>
+                  <Box
+                    elevate={2}
+                    style={{
+                      borderRadius: 50,
+                      border: '3px solid #5B6BBF',
+                      overflow: 'hidden',
+                      width: 70,
+                      height: 70,
+                      background: '#FFF',
+                    }}>
+                    <img
+                      src={`${keys.HOST}/api/images/ccdcc8151f3a85de86fc62009d787865`}
+                      alt="im"
+                      width="70px"
+                    />
+                  </Box>
+                </div>
+                <div>{console.log('PEople ', state)}</div>
+              </>
             </Card>
+            <Messages />
           </LeftContainer>
           <MiddleContainer>
             <PostList />

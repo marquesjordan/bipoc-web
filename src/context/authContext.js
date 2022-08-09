@@ -88,6 +88,7 @@ const loginUser = (dispatch, callback) => {
         email: email,
         password: password,
       });
+
       const cookies = new Cookies();
 
       cookies.set('token', response.data.token);
