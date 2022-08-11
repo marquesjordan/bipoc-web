@@ -8,7 +8,10 @@ import { Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import Messages from '../components/Messages';
 import { Box } from '@mui/system';
-import keys from '../config/keys';
+const URI =
+  process.env.NODE_ENV === 'production'
+    ? 'https://vast-beach-48711.herokuapp.com'
+    : 'http://localhost:5000';
 
 function HomePage() {
   let navigate = useNavigate();
@@ -48,7 +51,7 @@ function HomePage() {
                       background: '#FFF',
                     }}>
                     <img
-                      src={`${keys.HOST}/api/images/ccdcc8151f3a85de86fc62009d787865`}
+                      src={`${process.env.REACT_APP_HOST_URL}/api/images/ccdcc8151f3a85de86fc62009d787865`}
                       alt="im"
                       width="70px"
                     />

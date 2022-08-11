@@ -14,7 +14,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import keys from '../config/keys';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -54,7 +53,7 @@ export default function PostCard({ post }) {
       <CardMedia
         component="img"
         height="194"
-        image={`${keys.HOST}/api/images/${post.imageKey}`}
+        image={`${process.env.REACT_APP_HOST_URL}/api/images/${post.imageKey}`}
         alt="Paella dish"
         style={{
           objectFit: 'contain',

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Card from '@mui/material/Card';
-import keys from '../config/keys';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -10,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-const socket = io(keys.HOST);
+const socket = io(process.env.REACT_APP_HOST_URL);
 
 function Messages() {
   const [chat, setChat] = useState([]);
