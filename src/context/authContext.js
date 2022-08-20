@@ -25,12 +25,18 @@ const authReducer = (state, action) => {
 
 const verify = (dispatch) => {
   return async (token) => {
-    const response = await api.post('/api/verify', {
-      token,
-    });
+    try {
+      const response = await api.post('/api/verify', {
+        token,
+      });
 
-    console.log('CONTE ', response);
-    dispatch({ type: 'auth', payload: response.data });
+      dispatch({ type: 'auth', payload: response.data });
+    } catch (err) {
+      const cookies = new Cookies();
+
+      cookies.remove('token');
+      dispatch({ type: 'add_error', payload: 'Authentication Expired' });
+    }
   };
 };
 

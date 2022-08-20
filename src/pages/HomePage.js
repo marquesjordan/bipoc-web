@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { Context as AuthContext } from '../context/authContext';
+import { Context as ProfileContext } from '../context/profileContext';
 import { useNavigate } from 'react-router-dom';
 import PostList from '../components/PostList';
 import styled from 'styled-components';
@@ -8,16 +9,18 @@ import { Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import Messages from '../components/Messages';
 import { Box } from '@mui/system';
-const URI =
-  process.env.NODE_ENV === 'production'
-    ? 'https://vast-beach-48711.herokuapp.com'
-    : 'http://localhost:5000';
+// const URI =
+//   process.env.NODE_ENV === 'production'
+//     ? 'https://vast-beach-48711.herokuapp.com'
+//     : 'http://localhost:5000';
 
 function HomePage() {
   let navigate = useNavigate();
   const { state, verify } = useContext(AuthContext);
+  const { state: profile } = useContext(ProfileContext);
 
   useEffect(() => {
+    console.log('Home ', profile);
     if (!state.token) {
       navigate('/login', { replace: true });
     }
@@ -51,7 +54,7 @@ function HomePage() {
                       background: '#FFF',
                     }}>
                     <img
-                      src={`${process.env.REACT_APP_HOST_URL}/api/images/ccdcc8151f3a85de86fc62009d787865`}
+                      src={`${process.env.REACT_APP_PHOTO_HOST_URL}/api/images/${profile.profile.photo}`}
                       alt="im"
                       width="70px"
                     />

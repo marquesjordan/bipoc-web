@@ -53,7 +53,7 @@ export default function PostCard({ post }) {
       <CardMedia
         component="img"
         height="194"
-        image={`${process.env.REACT_APP_HOST_URL}/api/images/${post.imageKey}`}
+        image={`${process.env.REACT_APP_PHOTO_HOST_URL}/api/images/${post.imageKey}`}
         alt="Paella dish"
         style={{
           objectFit: 'contain',

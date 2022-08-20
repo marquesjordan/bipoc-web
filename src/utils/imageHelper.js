@@ -3,7 +3,7 @@ import api from '../api';
 const imageHelper = {
   fetchImage: async (key) => {
     const response = await api.get(
-      `${process.env.REACT_APP_HOST_URL}/api/images/${key}`,
+      `${process.env.REACT_APP_PHOTO_HOST_URL}/api/images/${key}`,
     );
     console.log('Fetxgt ', response);
   },

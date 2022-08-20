@@ -13,5 +13,5 @@ export const useForm = (callback, initialState = {}) => {
     callback(values);
   };
 
-  return { onChange, onSubmit, values };
+  return { onChange, onSubmit, values, setValues };
 };
