@@ -9,18 +9,15 @@ import { Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import Messages from '../components/Messages';
 import { Box } from '@mui/system';
-// const URI =
-//   process.env.NODE_ENV === 'production'
-//     ? 'https://vast-beach-48711.herokuapp.com'
-//     : 'http://localhost:5000';
 
 function HomePage() {
   let navigate = useNavigate();
   const { state, verify } = useContext(AuthContext);
-  const { state: profile } = useContext(ProfileContext);
+  const { state: profile, getProfile } = useContext(ProfileContext);
 
   useEffect(() => {
     console.log('Home ', profile);
+    getProfile();
     if (!state.token) {
       navigate('/login', { replace: true });
     }
@@ -60,7 +57,7 @@ function HomePage() {
                     />
                   </Box>
                 </div>
-                <div>{console.log('PEople ', state)}</div>
+                <div>{console.log('PEople ', profile)}</div>
               </>
             </Card>
             <Messages />
